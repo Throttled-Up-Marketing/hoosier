@@ -1,0 +1,6 @@
+# macOS
+.DS_Store
+
+# Large source originals / unused image scratch files (kept locally only)
+images/heavy-excavator-digging-day-light-outdoors.jpg
+images/hero-driveway.svg
