@@ -11,6 +11,7 @@
   --color-accent:      #dda745; /* accent / highlights */
   --color-body:        #14140a; /* page background */
   --color-white:       #fbfaf8; /* text on dark / "whites" */
+  --color-light-alt:   #efeae1; /* slightly darker off-white, for adjacent light sections */
   --color-card-hover:  #161616; /* card hover state */
 
   /* Borders — one consistent style across the whole site */
@@ -82,19 +83,34 @@ h4 {
   font-weight: 600;
 }
 p { font-size: 1rem; line-height: 1.6; }
+/* Consistent spacing below every heading (heading → subheading gap) */
+h1, h2, h3, h4 { margin-bottom: 20px; }
 
 /* Text helpers */
 .accent     { color: var(--color-accent); }
+/* Eyebrow / superheading — small accent label above a section title */
+.eyebrow {
+  display: block;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
 .lead       { font-size: 1.2rem; line-height: 1.55; max-width: 42rem; opacity: 0.9; }
 .intro      { font-size: 1.1rem; line-height: 1.65; opacity: 0.85; }
 .body-small { font-size: var(--font-small); }
+.nowrap     { white-space: nowrap; }
 
 /* 5. Layout utilities ------------------------------------------------------ */
 .section { padding: var(--section-pad-y) var(--section-pad-x); }
 .section--flush  { padding: 0; }
 .section--light  { background: var(--color-white); color: var(--color-black); }
+.section--light-alt { background: var(--color-light-alt); color: var(--color-black); }
 .section--dark   { background: var(--color-black);  color: var(--color-white); }
 .section--center { text-align: center; }
+.section--right  { text-align: right; }
 
 .container {
   width: 100%;
@@ -143,15 +159,76 @@ p { font-size: 1rem; line-height: 1.6; }
   padding-bottom: 0.9rem;
   box-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
 }
-.logo { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em; }
+.logo { display: inline-flex; align-items: center; }
+.logo img { height: 44px; width: auto; display: block; }
+#site-header.scrolled .logo img { height: 38px; transition: height 0.3s ease; }
+.nav { display: flex; align-items: center; gap: 1.5rem; }
 .nav a {
   color: var(--color-white);
   opacity: 0.85;
-  margin-left: 1.5rem;
   font-size: 0.95rem;
   transition: opacity 0.2s ease;
 }
 .nav a:hover { opacity: 1; }
+.caret { font-size: 0.7em; opacity: 0.8; }
+/* Light-hero pages (e.g. Contact, Projects): dark nav text while the bar is
+   transparent at the top. Once scrolled, .scrolled restores white-on-black. */
+#site-header.header--light:not(.scrolled) .nav > a,
+#site-header.header--light:not(.scrolled) .nav-link {
+  color: var(--color-black);
+}
+
+/* Services dropdown */
+.nav-item.has-dropdown { position: relative; }
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 240px;
+  margin-top: 0.6rem;
+  padding: 0.4rem 0;
+  background: var(--color-black);
+  border: var(--border);
+  border-radius: var(--border-radius);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+}
+.nav-item.has-dropdown:hover > .dropdown,
+.nav-item.has-dropdown:focus-within > .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.dropdown a {
+  display: block;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.92rem;
+  white-space: nowrap;
+}
+
+/* Nested submenu (e.g. Drainage Solutions → its sub-pages) */
+.dropdown .has-submenu { position: relative; }
+.dropdown .has-submenu > a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.dropdown .submenu {
+  top: -0.4rem;          /* align with parent item, accounting for dropdown padding */
+  left: 100%;
+  margin-top: 0;
+  margin-left: 0.4rem;
+}
+.dropdown .has-submenu:hover > .submenu,
+.dropdown .has-submenu:focus-within > .submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
 
 /* 7. Sections -------------------------------------------------------------- */
 
@@ -183,7 +260,7 @@ p { font-size: 1rem; line-height: 1.6; }
   background: var(--overlay-gradient);
   z-index: -1;
 }
-.hero h1 { margin-bottom: 1rem; }
+.hero h1 { margin-bottom: 20px; }
 .hero .lead { margin-bottom: 2rem; }
 @media (min-width: 768px) {
   .hero h1 { padding-inline: 15%; }
@@ -230,6 +307,8 @@ p { font-size: 1rem; line-height: 1.6; }
 }
 .card {
   position: relative;
+  display: block;
+  color: inherit;                             /* cards are links — keep text color, not link gold */
   background: var(--color-black);
   padding: 1.925rem 1.75rem;                  /* top/bottom 10% larger than sides */
   transition: background 0.2s ease, box-shadow 0.2s ease;
@@ -239,6 +318,18 @@ p { font-size: 1rem; line-height: 1.6; }
   /* accent ring fills the surrounding gaps so the whole card outline turns accent */
   box-shadow: 0 0 0 var(--border-width) var(--border-color-hover);
   z-index: 1;
+}
+/* Card image — bleeds to the card edges, sits above the title */
+.card-img {
+  margin: -1.925rem -1.75rem 1.5rem;   /* cancel card padding so the image is full-bleed */
+  aspect-ratio: 16 / 10;
+  background: var(--border-color);      /* placeholder fill until a real image is set */
+  overflow: hidden;
+}
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .card h3 { margin-bottom: 0.75rem; }
 .card p {
@@ -267,9 +358,320 @@ p { font-size: 1rem; line-height: 1.6; }
   background: var(--color-accent);
 }
 
+/* Service page intro — left-aligned copy + contact form column */
+.svc-intro {
+  position: relative;
+  overflow: hidden;
+  /* transparent so the bg-photo (negative z-index) shows through,
+     same as the homepage hero; section--dark still gives white text */
+  background: transparent;
+  /* extra top padding so content clears the fixed header */
+  padding-top: calc(var(--section-pad-y) + 4.5rem);
+}
+.svc-intro .row { align-items: start; }
+#culvert-problems .row,
+#surface-problems .row,
+#tile-problems .row { align-items: start; }
+/* More breathing room between the paragraph and the bullet list in warning sections */
+#warning-signs .intro { margin-bottom: 1.75rem; }
+.svc-intro__copy { max-width: 90%; }
+.svc-intro__copy h1 { margin-bottom: 1.25rem; }
+.svc-intro__copy .lead { margin-bottom: 2rem; max-width: none; }
+
+/* Page hero — centered title section that clears the fixed header */
+#about-hero { padding-top: calc(var(--section-pad-y) + 4.5rem); }
+
+/* Projects gallery */
+#projects-hero { padding-top: calc(var(--section-pad-y) + 4.5rem); padding-bottom: 0; }
+#projects-hero .intro { max-width: 760px; margin-inline: auto; }
+#project-gallery { padding-top: 100px; }
+.masonry {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 900px) { .masonry { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .masonry { grid-template-columns: 1fr; } }
+.masonry img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  border-radius: var(--border-radius);
+}
+
+/* Contact page */
+#contact-intro { padding-top: calc(var(--section-pad-y) + 4.5rem); }
+#contact-intro .intro { max-width: 640px; }
+.contact-grid { align-items: start; margin-top: 2.5rem; }
+.contact-form {
+  min-height: 480px;
+  border: var(--border);
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.contact-form__placeholder { opacity: 0.4; font-size: 0.95rem; }
+.contact-details { display: flex; flex-direction: column; gap: 1.5rem; }
+.contact-detail h4 { margin-bottom: 0.25rem; color: var(--color-accent); }
+.contact-detail p { line-height: 1.6; }
+/* Owner statement — darker panel under the heading */
+.about-statement {
+  max-width: 850px;
+  margin: 2.5rem auto 0;
+  padding: 2.5rem;
+  background: #050505;
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+.about-statement p {
+  margin-bottom: 1.25rem;
+  line-height: 1.75;
+  opacity: 0.85;
+}
+.about-statement .about-signature {
+  margin-bottom: 0;
+  margin-top: 1.75rem;
+  color: var(--color-accent);
+  font-weight: 600;
+  opacity: 1;
+}
+
+/* Icon highlights — 4 borderless boxes, icon above each title */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.5rem;
+  margin-top: 3rem;
+  text-align: center;
+}
+@media (max-width: 900px) { .icon-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .icon-grid { grid-template-columns: 1fr; } }
+.icon-box svg {
+  width: 38px;
+  height: 38px;
+  margin: 0 auto 1rem;
+  display: block;
+  stroke: var(--color-accent);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.icon-box h3 { margin-bottom: 0.6rem; }
+.icon-box p { opacity: 0.75; font-size: 0.98rem; }
+
 /* About / Hire Travis */
 .about h2 { margin-bottom: 1.25rem; }
 .about .intro { margin-bottom: 2rem; }
+
+/* Service-detail bullet list (accent dots), sits between intro and button */
+.svc-list { list-style: none; margin-bottom: 2rem; }
+.svc-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.7rem;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+.svc-list li:last-child { margin-bottom: 0; }
+/* Icon variant — replaces the dot with an inline icon */
+.svc-list--icons li { display: flex; align-items: flex-start; gap: 0.75rem; padding-left: 0; }
+.svc-list--icons li::before { display: none; }
+.svc-list--icons svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  stroke: var(--color-accent);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.svc-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+/* Linkable sub-service cards (work on light or dark sections) */
+.link-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+  text-align: left;
+}
+@media (max-width: 900px) {
+  .link-card-grid { grid-template-columns: 1fr; }
+}
+#durability .intro,
+#grade-matters .intro,
+#equipment-matters .intro,
+#skid-steer-clearing .intro { max-width: 850px; }
+.link-card-grid--4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 900px) {
+  .link-card-grid--4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .link-card-grid--4 { grid-template-columns: 1fr; }
+}
+.link-card {
+  display: block;
+  border: var(--border);
+  border-radius: var(--border-radius);
+  padding: 1.75rem;
+  color: inherit;
+  transition: border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+.link-card:hover {
+  border-color: var(--border-color-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(10, 10, 10, 0.08);
+}
+.link-card h3 { margin-bottom: 0.6rem; }
+.link-card p { opacity: 0.75; font-size: 0.98rem; }
+/* "See More" cue inside clickable cards */
+.card-more {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--color-accent);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Generic image placeholder (reserved space before a real image is set) */
+.img-placeholder {
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  background: var(--border-color);
+  border-radius: var(--border-radius);
+}
+
+/* Service-area / coverage copy spacing */
+.coverage h4 { margin-top: 1.5rem; margin-bottom: 0.35rem; color: var(--color-accent); }
+.coverage p { margin-bottom: 0.75rem; }
+.coverage p:last-child { margin-bottom: 0; }
+
+/* Process timeline — 3 horizontal steps, numbered icon nodes, no card chrome */
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  margin-top: 3.5rem;
+}
+@media (max-width: 768px) {
+  .timeline { grid-template-columns: 1fr; gap: 3rem; }
+}
+.timeline-step { position: relative; text-align: center; }
+.step-node {
+  position: relative;
+  z-index: 1;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border);
+  border-radius: 50%;
+  background: var(--color-black);
+}
+.step-node svg {
+  width: 32px;
+  height: 32px;
+  stroke: var(--color-white);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.step-num {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent);
+  color: var(--color-black);
+  border-radius: 50%;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.step-node .step-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+.timeline-step h3 { margin-bottom: 0.6rem; }
+.timeline-step p { opacity: 0.75; font-size: 0.98rem; max-width: 34ch; margin: 0 auto; }
+/* connector line between the numbered nodes (desktop only) */
+@media (min-width: 769px) {
+  .timeline-step:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    top: 35px;
+    left: calc(50% + 44px);
+    width: calc(100% + 2.5rem - 88px);
+    height: 2px;
+    background: var(--border-color);
+    z-index: 0;
+  }
+}
+
+/* FAQ accordions — native <details>, global border style */
+.faq-list {
+  max-width: var(--container-narrow);
+  margin: 3rem auto 0;
+  text-align: left;
+}
+.faq-item {
+  border: var(--border);
+  border-radius: var(--border-radius);
+  margin-bottom: 1rem;
+  transition: border-color 0.2s ease;
+}
+.faq-item:last-child { margin-bottom: 0; }
+.faq-item:hover,
+.faq-item[open] { border-color: var(--border-color-hover); }
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.15rem 1.4rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+";
+  flex-shrink: 0;
+  color: var(--color-accent);
+  font-size: 1.6rem;
+  line-height: 1;
+  font-weight: 400;
+}
+.faq-item[open] summary::after { content: "\2212"; } /* en-dash minus */
+.faq-item p {
+  margin: 0;
+  padding: 0 1.4rem 1.3rem;
+  opacity: 0.8;
+  line-height: 1.6;
+}
 
 /* Why / checklist */
 .why h2 { margin-bottom: 1.25rem; }
@@ -305,7 +707,7 @@ p { font-size: 1rem; line-height: 1.6; }
 .check-item span { font-size: 1.02rem; line-height: 1.5; opacity: 0.85; }
 
 /* Features — "What sets us apart": 6 cards in a 3-column grid */
-.features h2 { margin-bottom: 0.75rem; }
+.features h2 { margin-bottom: 20px; }
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -341,6 +743,18 @@ p { font-size: 1rem; line-height: 1.6; }
 }
 .feature-card h3 { margin-bottom: 0.6rem; }
 .feature-card p { opacity: 0.75; font-size: 0.98rem; }
+
+/* Image gallery slider (driveway photos) — all slides identical height, cropped */
+.gallery .slide {
+  padding: 0;
+  aspect-ratio: 4 / 3;
+}
+.gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+}
 
 /* Testimonials slider */
 .slider { overflow: hidden; }
@@ -421,11 +835,7 @@ p { font-size: 1rem; line-height: 1.6; }
   .footer-grid { grid-template-columns: 1fr; }
 }
 .footer h4 { margin-bottom: 1rem; }
-.footer-logo {
-  font-weight: 700;
-  font-size: 1.4rem;
-  letter-spacing: -0.02em;
-}
+.footer-logo img { height: 64px; width: auto; display: block; }
 .footer-brand p {
   margin-top: 1rem;
   opacity: 0.7;

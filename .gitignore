@@ -2,5 +2,28 @@
 .DS_Store
 
 # Large source originals / unused image scratch files (kept locally only)
+# The optimized .webp versions are committed; these multi-MB originals are not.
+# All source JPGs in images/ are originals — only the optimized .webp are served.
+images/*.jpg
 images/heavy-excavator-digging-day-light-outdoors.jpg
 images/hero-driveway.svg
+images/white-picket-fence-lines-edge-gravel-driveway-leading-house.jpg
+images/tractor-is-dirt-front-house.jpg
+images/laying-subsurface-drainage-systems-efficient-management-rainwater-stormwater-resources.jpg
+images/excavator-performs-excavation-work-by-digging-ground-with-bucket.jpg
+images/yard-work-bulldozer-clearing-land-from-old-trees-roots-branches-with-backhoe-machinery-urban-neighborhood.jpg
+images/drainage-ditch-filled-with-little-water.jpg
+images/grading-leveling-ground-surface-backhoe-loader-ensures-uniform-foundation-preparation.jpg
+images/scene-construction-site-with-equipment.jpg
+images/close-up-worker-backhoe-working-construction-site.jpg
+images/heavy-machinery-work-moving-earth-gravel-construction-site-daylight-bustling-urban-area.jpg
+images/pipe-is-running-through-brick-wall.jpg
+images/grate-street-is-leaking-water.jpg
+images/asphalt-street-with-train-rails.jpg
+images/pipe-with-communications-was-dug-pebble-soil-electrical-networks-ground-resort-repair-communications-thick-sheathed-cable-outdoors.jpg
+images/trench-excavating-installing-various-utility-pipes-cables-showing-ongoing-work-infrastructure-development.jpg
+
+# Source logo/favicon originals (favicon.png is the committed copy)
+images/Hoosier_Favicon1.png
+images/Hoosier_Horizontal Logo1.png
+images/Hoosier Logo Full.png
