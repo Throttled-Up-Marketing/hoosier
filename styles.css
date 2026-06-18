@@ -160,13 +160,14 @@ h1, h2, h3, h4 { margin-bottom: 20px; }
   box-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
 }
 .logo { display: inline-flex; align-items: center; }
-.logo img { height: 44px; width: auto; display: block; }
-#site-header.scrolled .logo img { height: 38px; transition: height 0.3s ease; }
+.logo img { height: 65px; min-width: 120px; width: auto; object-fit: contain; display: block; }
+#site-header.scrolled .logo img { height: 55px; transition: height 0.3s ease; }
 .nav { display: flex; align-items: center; gap: 1.5rem; }
 .nav a {
   color: var(--color-white);
   opacity: 0.85;
   font-size: 0.95rem;
+  font-weight: 700;
   transition: opacity 0.2s ease;
 }
 .nav a:hover { opacity: 1; }
@@ -219,9 +220,10 @@ h1, h2, h3, h4 { margin-bottom: 20px; }
 }
 .dropdown .submenu {
   top: -0.4rem;          /* align with parent item, accounting for dropdown padding */
-  left: 100%;
+  left: auto;
+  right: 100%;           /* open to the LEFT so it stays within the screen */
   margin-top: 0;
-  margin-left: 0.4rem;
+  margin-right: 0.4rem;
 }
 .dropdown .has-submenu:hover > .submenu,
 .dropdown .has-submenu:focus-within > .submenu {
