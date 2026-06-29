@@ -160,8 +160,8 @@ h1, h2, h3, h4 { margin-bottom: 20px; }
   box-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
 }
 .logo { display: inline-flex; align-items: center; }
-.logo img { height: 72px; min-width: 132px; width: auto; object-fit: contain; display: block; }
-#site-header.scrolled .logo img { height: 61px; transition: height 0.3s ease; }
+.logo img { height: 86px; min-width: 158px; width: auto; object-fit: contain; display: block; }
+#site-header.scrolled .logo img { height: 73px; transition: height 0.3s ease; }
 .nav { display: flex; align-items: center; gap: 1.5rem; }
 .nav a {
   color: var(--color-white);
