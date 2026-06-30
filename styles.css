@@ -1026,6 +1026,11 @@ h1, h2, h3, h4 { margin-bottom: 20px; }
   border-color: var(--border-color-hover);
   color: var(--color-accent);
 }
+/* On light sections the white chevrons/dots would vanish — darken them */
+.section--light .slider-arrow,
+.section--light-alt .slider-arrow { color: var(--color-black); }
+.section--light .dot,
+.section--light-alt .dot { background: rgba(10, 10, 10, 0.25); }
 .slider-dots { display: flex; gap: 0.5rem; }
 .dot {
   width: 10px;
