@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Consent Mode v2 defaults (must load before GTM) -->
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+(function(){var s=null;try{s=JSON.parse(localStorage.getItem('hdg_consent_v1'));}catch(e){}
+var gpc=navigator.globalPrivacyControl===true;
+var a=s?!!s.analytics:!gpc,m=s?!!s.marketing:!gpc,f=s?!!s.functional:!gpc;
+gtag('consent','default',{ad_storage:m?'granted':'denied',ad_user_data:m?'granted':'denied',ad_personalization:m?'granted':'denied',analytics_storage:a?'granted':'denied',functionality_storage:f?'granted':'denied',personalization_storage:f?'granted':'denied',security_storage:'granted',wait_for_update:500});})();
+</script>
+<!-- End Consent Mode v2 defaults -->
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -302,5 +311,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How fast can you get out for an estimate?","acceptedAnswer":{"@type":"Answer","text":"Most of the time we can walk the property within a few days of your call. Reach out and we'll find a time that works."}},{"@type":"Question","name":"Do you charge for an estimate?","acceptedAnswer":{"@type":"Answer","text":"No. Estimates are free and on-site. We walk the property, talk through the work, and put clear numbers in writing before any equipment moves."}},{"@type":"Question","name":"What areas do you cover?","acceptedAnswer":{"@type":"Answer","text":"Shelbyville and all of Shelby County, plus the surrounding counties roughly an hour out, including Hancock, Decatur, Rush, Johnson, Bartholomew, Ripley, and Brown. If you're close to that range and don't see your town, give us a call anyway."}},{"@type":"Question","name":"How do you take payment?","acceptedAnswer":{"@type":"Answer","text":"Cash, check, credit, and debit. Financing is available through Joist for jobs that need flexible terms. Ask when you call."}},{"@type":"Question","name":"When should I reach out to get on the schedule?","acceptedAnswer":{"@type":"Answer","text":"The sooner the better, especially spring through fall. Drainage and culvert work can usually be fit in faster. Call and we'll tell you straight where the schedule stands."}}]}
   </script>
 
+  <script src="/cookie-consent.js" defer></script>
 </body>
 </html>

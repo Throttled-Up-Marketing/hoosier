@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Consent Mode v2 defaults (must load before GTM) -->
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+(function(){var s=null;try{s=JSON.parse(localStorage.getItem('hdg_consent_v1'));}catch(e){}
+var gpc=navigator.globalPrivacyControl===true;
+var a=s?!!s.analytics:!gpc,m=s?!!s.marketing:!gpc,f=s?!!s.functional:!gpc;
+gtag('consent','default',{ad_storage:m?'granted':'denied',ad_user_data:m?'granted':'denied',ad_personalization:m?'granted':'denied',analytics_storage:a?'granted':'denied',functionality_storage:f?'granted':'denied',personalization_storage:f?'granted':'denied',security_storage:'granted',wait_for_update:500});})();
+</script>
+<!-- End Consent Mode v2 defaults -->
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -61,7 +70,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <section class="section section--light legal" id="legal">
     <div class="container container--narrow">
       <h1>Cookie Policy</h1>
-      <p class="legal-updated">Last updated: June 18, 2026</p>
+      <p class="legal-updated">Last updated: July 10, 2026</p>
 
       <p>This Cookie Policy explains how Hoosier Dirt &amp; Gravel ("we," "us," or "our") uses cookies and similar technologies on hoosierdirtandgravel.com. It should be read together with our <a href="/privacy">Privacy Policy</a>.</p>
 
@@ -70,15 +79,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <h2>Types of Cookies We Use</h2>
       <ul>
-        <li><strong>Essential cookies</strong> — needed for the website to load and work correctly. These are always active.</li>
-        <li><strong>Analytics &amp; performance cookies</strong> — if enabled, these help us understand which pages visitors view and how they navigate the site, so we can improve it. They collect aggregated, non-identifying information.</li>
+        <li><strong>Strictly necessary cookies</strong> — needed for the website to load, function, and remember your cookie choices. These are always active.</li>
+        <li><strong>Analytics &amp; performance cookies</strong> — help us understand which pages visitors view and how they navigate the site, so we can improve it (for example, Google Analytics through Google Tag Manager).</li>
+        <li><strong>Marketing cookies</strong> — used to measure the effectiveness of our advertising and, where enabled, to support marketing (for example, Google or Meta advertising tools when active in our tag manager). These stay off unless you allow them.</li>
+        <li><strong>Functional cookies</strong> — enable embedded tools, such as our third-party contact-form provider, so those features work correctly.</li>
       </ul>
-      <p>We do not use cookies to sell your personal information or to serve advertising.</p>
+
+      <h2>Your Cookie Choices</h2>
+      <p>When you first visit our site, a cookie banner lets you accept all cookies, reject all non-essential cookies, or choose categories individually. You can change your choice at any time by selecting <strong>"Cookie Settings"</strong> in the website footer. Rejecting marketing cookies also serves as your opt-out of any sharing of your information for cross-context advertising.</p>
+      <p>We use Google Consent Mode, which means analytics and advertising tools only place cookies or receive your information after you allow the matching category. We also honor recognized browser-based opt-out signals, such as Global Privacy Control (GPC): if your browser sends a GPC signal, we treat analytics and marketing cookies as declined by default.</p>
 
       <h2>Third-Party Cookies</h2>
-      <p>Some features or embedded tools (such as analytics, maps, or a contact form provider) may set their own cookies. These are controlled by those third parties and governed by their own privacy and cookie policies.</p>
+      <p>Some features or embedded tools (such as analytics, advertising, maps, or a contact form provider) may set their own cookies. These are controlled by those third parties and governed by their own privacy and cookie policies.</p>
 
-      <h2>Managing Cookies</h2>
+      <h2>Managing Cookies in Your Browser</h2>
       <p>You can control or delete cookies through your browser settings, and set most browsers to warn you before accepting cookies or to refuse them entirely. Blocking some cookies may affect how parts of the site function. Browser help pages explain how to manage cookies for your specific browser.</p>
 
       <h2>Changes to This Policy</h2>
@@ -201,5 +215,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       });
     })();
   </script>
+  <script src="/cookie-consent.js" defer></script>
 </body>
 </html>
